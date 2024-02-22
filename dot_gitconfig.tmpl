@@ -1,0 +1,27 @@
+[user]
+	name = Sébastien Pondichy
+	email = sebastien.pondichy@gmail.com
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[init]
+	defaultBranch = main
+
+[core]
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true		# use n and N to move between diff sections
+	light = false		# set to true if using a terminal with light background
+
+[merge]
+	conflictstyle = diff3
+
+[diff]
+	colorMoved = default
