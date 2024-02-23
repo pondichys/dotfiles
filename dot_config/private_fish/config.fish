@@ -35,7 +35,11 @@ alias vi='nvim'
 alias vim='nvim'
 
 ### zoxide
-zoxide init fish | source
+if type -q zoxide
+	zoxide init fish | source
+end
 
 ### starship
-starship init fish | source
+if type -q starship
+	starship init fish | source
+end
