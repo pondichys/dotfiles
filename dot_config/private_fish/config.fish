@@ -20,6 +20,9 @@ alias l.='lsd -a | rg "^\."'
 # Better defaults
 alias df='df -h'
 alias free='free -m'
+if type -q rg
+	alias grep='rg'
+end
 
 # git
 alias gst='git status'
