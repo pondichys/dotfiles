@@ -37,6 +37,11 @@ alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 
+### homebrew for linux
+if test -d /home/linuxbrew
+	eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
+
 ### zoxide
 if type -q zoxide
 	zoxide init fish | source
