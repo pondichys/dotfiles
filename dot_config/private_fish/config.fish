@@ -11,6 +11,12 @@ function getakscfg -a cluster_name -d "Get kubeconfig file for a specific AKS cl
 	az aks get-credentials -g rg-aks-$cluster_name-prd -n aks-$cluster_name-prd --admin
 end
 
+# Fix bug with flatpak applications that cannot start when keybase is installed and /kbfs is mounted
+# https://github.com/flatpak/flatpak/issues/5496
+function fix-flatpak -d "Fix flatpak startup issue"
+	systemctl --user restart keybase-redirector.service kbfs.service
+end
+
 ### ALIASES ###
 # Changing ls to lsd
 alias ls='lsd -al --color=always --group-directories-first'
@@ -23,6 +29,11 @@ alias free='free -m'
 if type -q rg
 	alias grep='rg'
 end
+
+# fix-flatpak function
+alias fix-flatpaks='fix-flatpak'
+alias fix_flatpak='fix-flatpak'
+alias fix_flatpaks='fix-flatpak'
 
 # git
 alias gst='git status'
