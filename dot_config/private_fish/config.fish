@@ -1,5 +1,5 @@
 ### EXPORT ###
-set -e fish_greeting					# Suppresses fish's greeting message
+set fish_greeting		# disable fish greeting message
 set EDITOR "nvim"
 
 if status is-interactive
