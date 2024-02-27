@@ -2,6 +2,10 @@
 set fish_greeting		# disable fish greeting message
 set EDITOR "nvim"
 
+### Manage $PATH
+# Add ~/.local/bin to the end of $PATH if the directory exists
+fish_add_path --append --path ~/.local/bin
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
