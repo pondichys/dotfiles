@@ -62,6 +62,11 @@ if type -q zoxide
 	zoxide init fish | source
 end
 
+### fastfecth
+if type -q fastfetch
+  fastfetch
+end
+
 ### starship
 if type -q starship
 	starship init fish | source
