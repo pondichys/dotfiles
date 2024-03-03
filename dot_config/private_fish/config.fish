@@ -33,11 +33,14 @@ alias free='free -m'
 if type -q rg
 	alias grep='rg'
 end
+# Test abbreviation instead of alias
+abbr --add cat bat
 
 # fix-flatpak function
 alias fix-flatpaks='fix-flatpak'
 alias fix_flatpak='fix-flatpak'
 alias fix_flatpaks='fix-flatpak'
+abbr --add ff fix-flatpak
 
 # git
 alias gst='git status'
