@@ -1,2 +1,6 @@
 README.md
 LICENSE
+
+# Ignore the micro/backups and micro/buffers directories
+**/micro/backups/*
+**/micro/buffers/*
