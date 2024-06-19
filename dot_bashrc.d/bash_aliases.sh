@@ -10,9 +10,19 @@ alias kc='kubectx'
 alias kns='kubens'
 
 # File stuff
-alias ls='lsd --group-directories-first'
-alias ll='lsd --all --group-directories-first --git --long'
-alias tree='lsd --all --directory-only --tree'
+if command -v lsd &> /dev/null
+then
+	alias ls='lsd --group-directories-first'
+	alias ll='lsd --all --group-directories-first --git --long'
+	alias tree='lsd --all --directory-only --tree'
+fi
+
+if command -v eza &> /dev/null
+then
+	alias ls='eza --group-directories-first'
+	alias ll='eza --all --group-directories-first --git --long'
+	alias tree='eza --all --directory-only --tree'
+fi
 
 # Colorize grep output
 alias grep='grep --color=auto'
