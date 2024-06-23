@@ -10,6 +10,9 @@ if wezterm.config_builder then
 end
 
 -- This is where you apply your config choices
+-- Disable annoying beep sound
+config.audible_bell = 'Disabled'
+
 -- Set the color scheme
 config.color_scheme = 'Catppuccin Macchiato'
 
