@@ -32,10 +32,3 @@ unset rc
 if [ -d /home/linuxbrew/.linuxbrew ]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
-
-# Setup starship command prompt for bash
-if command -v starship &> /dev/null; then
-    eval "$(starship init bash)"
-fi
-
-
