@@ -1,0 +1,50 @@
+theme = "catppuccin_mocha"
+
+[editor]
+line-number = "relative"
+true-color = true
+color-modes = true
+rulers = [80]
+
+[editor.file-picker]
+hidden = false
+
+[editor.indent-guides]
+render = true
+skip-levels = 1
+
+[keys.normal]
+# VIM muscle memory
+0 = "goto_line_start"
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
+G = "goto_file_end"
+
+# DIY lazygit integration: use Control+g in normal mode to open lazygit
+# in a separate buffer, do your stuff, then quit and it will come back 
+# to the initial buffer
+# Credits to https://youtu.be/p3qvSz4RJts?si=-99eh1IHsE0ieF0a
+C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
+esc = ["collapse_selection", "keep_primary_selection"]
+# Use Alt+up or Alt+down to move current line up or down
+A-up = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+A-down = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+
+[keys.normal.space]
+c = "toggle_comments"
+w = ":w!"
+q = ":q!"
+
+[keys.select]
+# Vim muscle memory
+0 = "goto_line_start"
+"$" = "goto_line_end"
+"^" = "goto_first_nonwhitespace"
+G = "goto_file_end"
+
+# Escape the madness, no more fighting with (multiple) cursor(s)
+esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
+
+[keys.select.space]
+c = "toggle_comments"
+
