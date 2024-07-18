@@ -1,6 +1,6 @@
 ### EXPORT ###
 set fish_greeting		# disable fish greeting message
-set EDITOR "nvim"
+set EDITOR "helix"
 
 ### Manage $PATH
 # Add ~/.local/bin to the end of $PATH if the directory exists
@@ -22,10 +22,10 @@ function fix-flatpak -d "Fix flatpak startup issue"
 end
 
 ### ALIASES ###
-# Changing ls to lsd
-alias ls='lsd -al --color=always --group-directories-first'
-alias la='lsd -a --color=always --group-directories-first'
-alias l.='lsd -a | rg "^\."'
+# Changing ls to eza
+if type -q eza
+    alias ls='eza  --long --all --colors=always --icons --git --group-directories-first'
+end
 
 # Better defaults
 alias df='df -h'
@@ -33,8 +33,7 @@ alias free='free -m'
 if type -q rg
 	alias grep='rg'
 end
-# Test abbreviation instead of alias
-abbr --add cat bat
+alias cat='bat'
 
 # fix-flatpak function
 alias fix-flatpaks='fix-flatpak'
