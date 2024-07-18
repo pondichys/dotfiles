@@ -14,7 +14,8 @@ end
 config.audible_bell = 'Disabled'
 
 -- Set the color scheme
-config.color_scheme = 'Catppuccin Macchiato'
+-- config.color_scheme = 'Catppuccin Macchiato'
+config.color_scheme = 'Poimandres'
 
 -- Set the font to Hack Nerd Font
 -- This font must be available on the system!
@@ -22,6 +23,9 @@ config.font = wezterm.font 'Hack Nerd Font'
 
 -- Hide tab bar if only one tab is active
 config.hide_tab_bar_if_only_one_tab = true
+
+-- Set background opacity
+config.window_background_opacity = 0.9
 
 -- Hide all window decorations except resize
 config.window_decorations = "RESIZE"
