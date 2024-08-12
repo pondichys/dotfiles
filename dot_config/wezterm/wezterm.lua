@@ -23,12 +23,12 @@ config.font = wezterm.font 'Hack Nerd Font'
 
 -- Hide tab bar if only one tab is active
 config.hide_tab_bar_if_only_one_tab = true
-
+config.use_fancy_tab_bar = false
 -- Set background opacity
 config.window_background_opacity = 0.9
 
 -- Hide all window decorations except resize
-config.window_decorations = "RESIZE"
+-- config.window_decorations = "RESIZE"
 
 -- Finally return the configuration to Wezterm
 return config
