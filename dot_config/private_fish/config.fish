@@ -24,7 +24,7 @@ end
 ### ALIASES ###
 # Changing ls to eza
 if type -q eza
-    alias ls='eza  --long --all --colors=always --icons --git --group-directories-first'
+    alias ls='eza  --long --all --icons --git --group-directories-first'
 end
 
 # Better defaults
