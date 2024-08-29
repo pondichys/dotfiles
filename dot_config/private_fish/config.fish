@@ -1,6 +1,6 @@
 ### EXPORT ###
 set fish_greeting		# disable fish greeting message
-set EDITOR "helix"
+set EDITOR "micro"
 
 ### Manage $PATH
 # Add ~/.local/bin to the end of $PATH if the directory exists
@@ -62,6 +62,7 @@ end
 ### zoxide
 if type -q zoxide
 	zoxide init fish | source
+	alias za="zoxide add $PWD"
 end
 
 ### fastfecth

@@ -9,6 +9,9 @@ if [ -f /etc/os-release ]; then
 		alias update="sudo xbps-install -Su"
 		alias upd="sudo xbps-install -Su"
 
+		# update Void and flatpaks
+		alias upall="sudo xbps-install -Su && flatpak update"
+
 		#grub update
 		alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 		alias grub-update="sudo grub-mkconfig -o /boot/grub/grub.cfg"
