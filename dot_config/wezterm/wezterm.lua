@@ -15,7 +15,10 @@ config.audible_bell = 'Disabled'
 
 -- Set the color scheme
 -- config.color_scheme = 'Catppuccin Macchiato'
-config.color_scheme = 'Poimandres'
+config.color_scheme = 'Nord (Gogh)'
+
+-- Use fish shell by default
+config.default_prog = { '/usr/bin/fish' }
 
 -- Set the font to Hack Nerd Font
 -- This font must be available on the system!
