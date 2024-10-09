@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Wayfire (Wayland)
+Exec=startwayfire
+TryExec=wayfire
+Type=Application
+DesktopNames=Wayfire
