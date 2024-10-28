@@ -32,7 +32,7 @@ from libqtile.lazy import lazy
 # from libqtile.utils import guess_terminal
 
 mod = "mod4"
-terminal = "wezterm"
+terminal = "kitty"
 browser = "vivaldi-stable"
 
 keys = [
