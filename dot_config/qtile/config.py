@@ -26,14 +26,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from libqtile import bar, layout, qtile, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+import os
+import subprocess
+
+from libqtile import bar, hook, layout, qtile
+from libqtile.config import Click, Drag, Group, hook, Key, Match, Screen
 from libqtile.lazy import lazy
 # from libqtile.utils import guess_terminal
+from qtile_extras import widget
+from qtile_extras.widget.decorations import RectDecoration
 
 mod = "mod4"
 terminal = "kitty"
 browser = "vivaldi-stable"
+
+# Autostart
+@hook.subscribe.startup_once
+def autostart():
+    subprocess.call([os.path.expanduser('.config/qtile/autostart.sh')])
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -174,7 +184,7 @@ layouts = [
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    layout.MonadTall(),
+    layout.MonadTall(font="FiraCode Nerd Font",margin=5), 
     layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -188,6 +198,12 @@ widget_defaults = dict(
     fontsize=12,
     padding=3,
 )
+
+decor = {
+        "decorations": [RectDecoration(colour="#7287fd",radius=10, filled=True, padding_y=5)],
+        "padding": 18,
+        }
+
 extension_defaults = widget_defaults.copy()
 
 screens = [
@@ -205,13 +221,12 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 # widget.TextBox("default config", name="default"),
-                widget.CheckUpdates(distro="Void"),
+                widget.CheckUpdates(**decor,distro="Void"),
                 widget.Battery(charge_char="󱟠",discharge_char="󱟞",font="Font Awesome 6 Free Solid",format="{char} {percent:2.0%}",full_char="󱟢"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                widget.Clock(format="%Y-%m-%d %a %H:%M"),
                 widget.QuickExit(),
             ],
             24,
