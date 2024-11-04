@@ -1,0 +1,80 @@
+### EXPORT ###
+set fish_greeting		# disable fish greeting message
+set -gx EDITOR "nvim"
+
+### Manage $PATH
+# Add ~/.local/bin to the end of $PATH if the directory exists
+fish_add_path --append --path ~/.local/bin
+
+### homebrew for linux
+if test -d /home/linuxbrew
+	eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
+
+if status is-interactive
+
+	### FUNCTIONS ###
+	# Fix bug with flatpak applications that cannot start when keybase is installed and /kbfs is mounted
+	# https://github.com/flatpak/flatpak/issues/5496
+	function fix-flatpak -d "Fix flatpak startup issue"
+		systemctl --user restart keybase-redirector.service kbfs.service
+	end
+
+	### ALIASES ###
+	# Changing ls to eza
+	if type -q eza
+    	alias ls='eza  --long --all --icons --git --group-directories-first'
+	end
+
+	# Better defaults
+	alias df='df -h'
+	alias free='free -m'
+	if type -q rg
+		alias grep='rg'
+	end
+	if type -q bat
+		alias cat='bat'
+	end
+
+	# fix-flatpak function
+	alias fix-flatpaks='fix-flatpak'
+	alias fix_flatpak='fix-flatpak'
+	alias fix_flatpaks='fix-flatpak'
+
+	# git
+	alias gst='git status'
+	if type -q lazygit
+		alias lg='lazygit'
+	end
+
+	# kubernetes
+	alias k='kubectl'
+	alias kgp='kubectl get pods'
+
+	# nvim
+	if type -q nvim
+		alias v='nvim'
+		alias vi='nvim'
+		alias vim='nvim'
+	end
+
+
+
+	### zoxide
+	if type -q zoxide
+		zoxide init fish | source
+		alias za="zoxide add $PWD"
+	end
+
+	### fastfecth
+	if type -q fastfetch
+		alias ff='fastfetch'
+		fastfetch
+	end
+
+	### starship
+	if type -q starship
+		starship init fish | source
+	end
+
+end
