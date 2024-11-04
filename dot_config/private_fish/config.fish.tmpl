@@ -32,9 +32,18 @@ if status is-interactive
 	if type -q rg
 		alias grep='rg'
 	end
+	
+	{{ if ne .chezmoi.osRelease.id "debian" }}
 	if type -q bat
 		alias cat='bat'
 	end
+	{{ end }}
+
+	{{ if eq .chezmoi.osRelease.id "debian" }}
+	if type -q bat-cat
+		alias cat='bat-cat'
+	end
+	{{ end }}
 
 	# fix-flatpak function
 	alias fix-flatpaks='fix-flatpak'
