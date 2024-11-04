@@ -3,9 +3,6 @@ return {
     event = "VimEnter",
     opts = {
         preset = 'helix',
-        spec = {
-            { '<leader>s', group = '[S]earch' },
-        },
     },
     keys = {
         {

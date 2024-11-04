@@ -32,6 +32,9 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true, frequency=86400 },
+    change_detection = {
+        notify = false
+    }
 })
 
 -- Load options, keymaps

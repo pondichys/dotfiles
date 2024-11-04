@@ -47,3 +47,14 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = -1
 -- Only insert spaces; otherwise insert \t and complete with spaces 
 vim.opt.expandtab = true
+
+-- Turn on termguicolors
+vim.opt.termguicolors = true
+-- Set dark background
+vim.opt.background = 'dark'
+-- Always display signcolumn
+vim.opt.signcolumn = 'yes'
+
+-- only set clipboard if not in ssh, to make sure the OSC 52
+-- integration works automatically. Requires Neovim >= 0.10.0
+vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
