@@ -6,4 +6,7 @@ LICENSE
 **/micro/backups/*
 **/micro/buffers/*
 
+# Ignore lazy-lock.json
+**/lazy-lock.json
+
 **/__pycache__/*
