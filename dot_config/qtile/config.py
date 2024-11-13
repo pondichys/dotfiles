@@ -29,7 +29,7 @@
 import os
 import subprocess
 
-from libqtile import bar, hook, layout, qtile
+from libqtile import bar, hook, layout, qtile #, widget
 from libqtile.config import Click, Drag, Group, hook, Key, Match, Screen
 from libqtile.lazy import lazy
 # from libqtile.utils import guess_terminal
@@ -221,7 +221,7 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 # widget.TextBox("default config", name="default"),
-                widget.CheckUpdates(**decor,distro="Void"),
+                widget.CheckUpdates(**decor,distro="Arch"),
                 widget.Battery(charge_char="󱟠",discharge_char="󱟞",font="Font Awesome 6 Free Solid",format="{char} {percent:2.0%}",full_char="󱟢"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
