@@ -55,3 +55,7 @@ alias pscpu='ps auxf | sort -nr -k 3 | head 5'
 alias fix-flatpaks='fix-flatpak'
 alias fix_flatpak='fix-flatpak'
 alias fix_flatpaks='fix-flatpak'
+
+# Update GRUB
+alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
+alias grub-update='grub-mkconfig -o /boot/grub/grub.cfg'
