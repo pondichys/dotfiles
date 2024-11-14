@@ -1,6 +1,6 @@
 ### EXPORT ###
 set fish_greeting		# disable fish greeting message
-set -gx EDITOR "nvim"
+set -gx EDITOR "helix"
 
 ### Manage $PATH
 # Add ~/.local/bin to the end of $PATH if the directory exists
@@ -55,6 +55,9 @@ if status is-interactive
 	if type -q lazygit
 		alias lg='lazygit'
 	end
+
+	# helix
+	alias hx='helix'
 
 	# kubernetes
 	alias k='kubectl'
