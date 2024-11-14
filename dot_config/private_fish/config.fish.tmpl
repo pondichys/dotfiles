@@ -69,6 +69,26 @@ if status is-interactive
 		alias vi='nvim'
 	end
 
+    # pacman
+	# alias update="sudo pacman -Syy"
+	alias upgrade="sudo pacman -Syu"
+	alias fullupgrade="sudo pacman -Syu && yay -Syu"
+	alias install="sudo pacman -S"
+	alias remove="sudo pacman -Rns"
+	alias pkglist="pacman -Q"
+	alias pkgaurlist="pacman -Qm"
+	alias pkginfo="pacman -Qi"
+	alias pkgsearch="pacman -Ss"
+	alias pkgfile="pacman -Qo"
+	alias pkgfilesearch="pacman -F"
+	alias pkgfilelist="pacman -Ql"
+	alias pkgfilelistsearch="pacman -Fl"
+	alias cleancache="sudo pacman -Sc"
+	alias cleanaurcache="yay -Sc"
+	alias cleanorphans="pacman -Qtdq | sudo pacman -Rns -"
+	
+	alias update-mirrors='sudo reflector --verbose --score 100 --latest 20 --fastest 5 --sort rate --save /etc/pacman.d/mirrorlist'
+    alias fix-key='sudo rm /var/lib/pacman/sync/* && sudo rm -rf /etc/pacman.d/gnupg/* && sudo pacman-key --init && sudo pacman-key --populate && sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman --noconfirm -Su'
 
 	### zoxide
 	if type -q zoxide
