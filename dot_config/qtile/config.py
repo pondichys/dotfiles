@@ -188,7 +188,7 @@ layouts = [
     layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
-    # layout.TreeTab(),
+    layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
 ]
@@ -214,6 +214,9 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
+                widget.Spacer(),
+                widget.Clock(format="%a %d %b %Y %H:%M"),
+                widget.Spacer(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -221,12 +224,11 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 # widget.TextBox("default config", name="default"),
-                widget.CheckUpdates(**decor,distro="Arch"),
+                # widget.CheckUpdates(**decor,distro="Arch"),
                 widget.Battery(charge_char="󱟠",discharge_char="󱟞",font="Font Awesome 6 Free Solid",format="{char} {percent:2.0%}",full_char="󱟢"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %H:%M"),
                 widget.QuickExit(),
             ],
             24,
