@@ -33,5 +33,9 @@ config.window_background_opacity = 0.9
 -- Hide all window decorations except resize
 -- config.window_decorations = "RESIZE"
 
+-- Set initial columns and rows
+config.initial_cols = 120
+config.initial_rows = 48
+
 -- Finally return the configuration to Wezterm
 return config
