@@ -1,3 +1,5 @@
+#!/usr/bin/env fish
+
 ### EXPORT ###
 set fish_greeting		# disable fish greeting message
 set -gx EDITOR "helix"
@@ -56,6 +58,10 @@ if status is-interactive
 		alias lg='lazygit'
 	end
 
+	# Grub update
+	alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+	alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+	
 	# helix
 	alias hx='helix'
 
@@ -69,10 +75,10 @@ if status is-interactive
 		alias vi='nvim'
 	end
 
+	{{ if eq .chezmoi.osRelease.id "arch" }}
     # pacman
-	# alias update="sudo pacman -Syy"
-	alias upgrade="sudo pacman -Syu"
-	alias fullupgrade="sudo pacman -Syu && yay -Syu"
+	alias update="sudo pacman -Syu"
+	alias fullupdate="sudo pacman -Syu && yay -Syu"
 	alias install="sudo pacman -S"
 	alias remove="sudo pacman -Rns"
 	alias pkglist="pacman -Q"
@@ -89,6 +95,7 @@ if status is-interactive
 	
 	alias update-mirrors='sudo reflector --verbose --score 100 --latest 20 --fastest 5 --sort rate --save /etc/pacman.d/mirrorlist'
     alias fix-key='sudo rm /var/lib/pacman/sync/* && sudo rm -rf /etc/pacman.d/gnupg/* && sudo pacman-key --init && sudo pacman-key --populate && sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman --noconfirm -Su'
+	{{ end }}
 
 	### zoxide
 	if type -q zoxide
@@ -96,15 +103,19 @@ if status is-interactive
 		alias za="zoxide add $PWD"
 	end
 
-	### fastfecth
+	### fastfetch
 	if type -q fastfetch
 		alias ff='fastfetch'
 		fastfetch
+	end
+
+	### fzf
+	if type -q fzf
+		fzf --fish | source
 	end
 
 	### starship
 	if type -q starship
 		starship init fish | source
 	end
-
 end
