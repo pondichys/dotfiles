@@ -49,8 +49,9 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "wezterm"
-editor = os.getenv("EDITOR") or "nvim"
+editor = os.getenv("EDITOR") or "helix"
 editor_cmd = terminal .. " -e " .. editor
+file_manager = "pcmanfm-qt"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -73,7 +74,7 @@ awful.layout.layouts = {
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -91,6 +92,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "open file manager", file_manager },
                                     { "open terminal", terminal }
                                   }
                         })
@@ -207,12 +209,13 @@ awful.screen.connect_for_each_screen(function(s)
             s.mytaglist,
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
+        -- Middle widget        
+        s.mytasklist,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
-            mytextclock,
+	          mytextclock,
             s.mylayoutbox,
         },
     }
