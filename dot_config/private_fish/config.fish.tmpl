@@ -1,8 +1,8 @@
 #!/usr/bin/env fish
 
 ### EXPORT ###
-set fish_greeting		# disable fish greeting message
-set -gx EDITOR "helix"
+set fish_greeting # disable fish greeting message
+set -gx EDITOR helix
 
 ### Manage $PATH
 # Add ~/.local/bin to the end of $PATH if the directory exists
@@ -10,112 +10,115 @@ fish_add_path --append --path ~/.local/bin
 
 ### homebrew for linux
 if test -d /home/linuxbrew
-	eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
 
 if status is-interactive
 
-	### FUNCTIONS ###
-	# Fix bug with flatpak applications that cannot start when keybase is installed and /kbfs is mounted
-	# https://github.com/flatpak/flatpak/issues/5496
-	function fix-flatpak -d "Fix flatpak startup issue"
-		systemctl --user restart keybase-redirector.service kbfs.service
-	end
+    ### FUNCTIONS ###
+    # Fix bug with flatpak applications that cannot start when keybase is installed and /kbfs is mounted
+    # https://github.com/flatpak/flatpak/issues/5496
+    function fix-flatpak -d "Fix flatpak startup issue"
+        systemctl --user restart keybase-redirector.service kbfs.service
+    end
 
-	### ALIASES ###
-	# Changing ls to eza
-	if type -q eza
-    	alias ls='eza  --long --all --icons --git --group-directories-first'
-	end
+    ### ALIASES ###
+    # Changing ls to eza
+    if type -q eza
+        alias ls='eza  --long --all --icons --git --group-directories-first'
+    end
 
-	# Better defaults
-	alias df='df -h'
-	alias free='free -m'
-	if type -q rg
-		alias grep='rg'
-	end
-	
-	{{ if ne .chezmoi.osRelease.id "debian" }}
-	if type -q bat
-		alias cat='bat'
-	end
-	{{ end }}
+    # Better defaults
+    alias df='df -h'
+    alias free='free -m'
+    if type -q rg
+        alias grep='rg'
+    end
 
-	{{ if eq .chezmoi.osRelease.id "debian" }}
-	if type -q bat-cat
-		alias cat='bat-cat'
-	end
-	{{ end }}
+    {{ if ne .chezmoi.osRelease.id "debian" }}
+    if type -q bat
+        alias cat='bat'
+    end
+    {{ end }}
 
-	# fix-flatpak function
-	alias fix-flatpaks='fix-flatpak'
-	alias fix_flatpak='fix-flatpak'
-	alias fix_flatpaks='fix-flatpak'
+    {{ if eq .chezmoi.osRelease.id "debian" }}
+    if type -q bat-cat
+        alias cat='bat-cat'
+    end
+    {{ end }}
 
-	# git
-	alias gst='git status'
-	if type -q lazygit
-		alias lg='lazygit'
-	end
+    # fix-flatpak function
+    alias fix-flatpaks='fix-flatpak'
+    alias fix_flatpak='fix-flatpak'
+    alias fix_flatpaks='fix-flatpak'
 
-	# Grub update
-	alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-	alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-	
-	# helix
-	alias hx='helix'
+    # git
+    alias gst='git status'
+    if type -q lazygit
+        alias lg='lazygit'
+    end
 
-	# kubernetes
-	alias k='kubectl'
-	alias kgp='kubectl get pods'
+    # Grub update
+    alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+    alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
-	# nvim
-	if type -q nvim
-		alias v='nvim'
-		alias vi='nvim'
-	end
+    # helix
+    alias hx='helix'
 
-	{{ if eq .chezmoi.osRelease.id "arch" }}
+    # kubernetes
+    alias k='kubectl'
+    alias kgp='kubectl get pods'
+
+    # nvim
+    if type -q nvim
+        alias v='nvim'
+        alias vi='nvim'
+        if test -d $HOME/.config/minivim
+            alias mvim='NVIM_APPNAME=minivim nvim'
+        end
+    end
+
+    {{ if eq .chezmoi.osRelease.id "arch" }}
     # pacman
-	alias update="sudo pacman -Syu"
-	alias fullupdate="sudo pacman -Syu && yay -Syu"
-	alias install="sudo pacman -S"
-	alias remove="sudo pacman -Rns"
-	alias pkglist="pacman -Q"
-	alias pkgaurlist="pacman -Qm"
-	alias pkginfo="pacman -Qi"
-	alias pkgsearch="pacman -Ss"
-	alias pkgfile="pacman -Qo"
-	alias pkgfilesearch="pacman -F"
-	alias pkgfilelist="pacman -Ql"
-	alias pkgfilelistsearch="pacman -Fl"
-	alias cleancache="sudo pacman -Sc"
-	alias cleanaurcache="yay -Sc"
-	alias cleanorphans="pacman -Qtdq | sudo pacman -Rns -"
-	
-	alias update-mirrors='sudo reflector --verbose --score 100 --latest 20 --fastest 5 --sort rate --save /etc/pacman.d/mirrorlist'
+    alias update="sudo pacman -Syu"
+    alias fullupdate="sudo pacman -Syu && yay -Syu"
+    alias install="sudo pacman -S"
+    alias remove="sudo pacman -Rns"
+    alias pkglist="pacman -Q"
+    alias pkgaurlist="pacman -Qm"
+    alias pkginfo="pacman -Qi"
+    alias pkgsearch="pacman -Ss"
+    alias pkgfile="pacman -Qo"
+    alias pkgfilesearch="pacman -F"
+    alias pkgfilelist="pacman -Ql"
+    alias pkgfilelistsearch="pacman -Fl"
+    alias cleancache="sudo pacman -Sc"
+    alias cleanaurcache="yay -Sc"
+    alias cleanorphans="pacman -Qtdq | sudo pacman -Rns -"
+
+    alias update-mirrors='sudo reflector --verbose --score 100 --latest 20 --fastest 5 --sort rate --save /etc/pacman.d/mirrorlist'
     alias fix-key='sudo rm /var/lib/pacman/sync/* && sudo rm -rf /etc/pacman.d/gnupg/* && sudo pacman-key --init && sudo pacman-key --populate && sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman --noconfirm -Su'
-	{{ end }}
+    {{ end }}
 
-	### zoxide
-	if type -q zoxide
-		zoxide init fish | source
-		alias za="zoxide add $PWD"
-	end
+    ### zoxide
+    if type -q zoxide
+        zoxide init fish | source
+        alias za="zoxide add $PWD"
+    end
 
-	### fastfetch
-	if type -q fastfetch
-		alias ff='fastfetch'
-		fastfetch
-	end
+    ### fastfetch
+    if type -q fastfetch
+        alias ff='fastfetch'
+        fastfetch
+    end
 
-	### fzf
-	if type -q fzf
-		fzf --fish | source
-	end
+    ### fzf
+    if type -q fzf
+        fzf --fish | source
+    end
 
-	### starship
-	if type -q starship
-		starship init fish | source
-	end
+    ### starship
+    if type -q starship
+        starship init fish | source
+    end
 end
