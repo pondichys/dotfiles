@@ -1,0 +1,23 @@
+# Fix bug with flatpak applications that cannot start when keybase is installed and /kbfs is mounted
+# https://github.com/flatpak/flatpak/issues/5496
+function fixflatpaks() {
+	systemctl --user restart keybase-redirector.service kbfs.service
+}
+
+{{ if eq .chezmoi.osRelease.id "arch" }}
+# Show the list of packages that need this package
+function depends()  {
+    search=$(echo "$1")
+    sudo pacman -Sii $search | grep "Required" | sed -e "s/Required By     : //g" | sed -e "s/  /\n/g"
+}
+
+# Fix various pacman issues related to keys
+function fixkeys() {
+    sudo rm /var/lib/pacman/sync/* && \
+    sudo rm -rf /etc/pacman.d/gnupg/* && \
+    sudo pacman-key --init && \
+    sudo pacman-key --populate && \	
+    sudo pacman -Sy --noconfirm archlinux-keyring && \
+    sudo pacman --noconfirm -Su
+}
+{{ end }}
