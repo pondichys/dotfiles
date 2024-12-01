@@ -4,6 +4,7 @@
 # Misc
 {{ if eq .chezmoi.osRelease.id "debian" }}
 if command -v bat-cat &> /dev/null
+	then
     alias cat='bat-cat'
 fi
 {{ end }}
@@ -37,6 +38,14 @@ then
     alias ll='lsd --all --group-directories-first --git --long'
     alias tree='lsd --all --directory-only --tree'
 fi
+
+if command -v exa &> /dev/null
+then
+    alias ls='exa --group-directories-first'
+    alias ll='exa --all --group-directories-first --git --long'
+    alias tree='exa --all --directory-only --tree'
+fi
+
 
 if command -v eza &> /dev/null
 then
