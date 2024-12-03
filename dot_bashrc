@@ -1,5 +1,17 @@
 # .bashrc
 
+# Prepare environment if using homebrew for Linux
+if [ -d /home/linuxbrew/.linuxbrew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# Activate mise if present
+if command -v mise &> /dev/null
+then
+	eval "$(/usr/bin/mise activate bash)"
+fi
+
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
@@ -27,8 +39,3 @@ if [ -d ~/.bashrc.d ]; then
     done
 fi
 unset rc
-
-# Prepare environment if using homebrew for Linux
-if [ -d /home/linuxbrew/.linuxbrew ]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
