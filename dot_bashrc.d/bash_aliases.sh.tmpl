@@ -84,7 +84,8 @@ alias gp='git push'
 alias glgg='git log --graph'
 alias glgga='git log --graph --decorate --all'
 alias glo='git log --pretty="oneline"'
-if command -v lazygit &> /dev/null
+#if command -v lazygit &> /dev/null
+if ! which lazygit 
 then
     alias lg='lazygit'
 fi
