@@ -16,7 +16,7 @@ then
     --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 # Set up fzf key bindings and fuzzy completion
 {{ if eq .chezmoi.osRelease.id "debian" }}
-    echo "Need to check what scripts to source to integrate into bash"
+	source /usr/share/doc/fzf/examples/key-bindings.bash
 {{ end }}
 {{ if ne .chezmoi.osRelease.id "debian" }}
     eval "$(fzf --bash)"
