@@ -4,7 +4,7 @@
 # Misc
 {{ if eq .chezmoi.osRelease.id "debian" }}
 if command -v bat-cat &> /dev/null
-	then
+then
     alias cat='bat-cat'
 fi
 {{ end }}
