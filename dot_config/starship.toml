@@ -2,19 +2,56 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # Inserts a blank line between shell prompts
-add_newline = false
+add_newline = true
+
+format = """
+$os$username$directory\
+$git_branch\
+$golang\
+$lua\
+$nodejs\
+$python\
+$rust\
+\n$character
+"""
+
+palette = "levuaska"
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character] # The name of the module we are configuring is "character"
 success_symbol = "[➜](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
 error_symbol = "[✖](bold red) "
 
+[palettes.levuaska]
+background = "#0f0f17"
+foreground = "#bfc9db"
+black0 = "#13141c"
+black1 = "#646a73"
+red1 = "#d78787"
+red2 = "#d78787"
+green1 = "#afbea2"
+green2 = "#afbea2"
+yellow1 = "#e4c9af"
+yellow2 = "#e4c9af"
+blue1 = "#a1bdce"
+blue2 = "#a1bdce"
+magenta1 = "#d7beda"
+magenta2 = "#d7beda"
+cyan1 = "#b1e7dd"
+cyan2 = "#b1e7dd"
+white1 = "#bfc9db"
+white2 = "#858893"
+
+
+[directory]
+home_symbol = "󱂵 "
+
 # Disable the package module, hiding it from the prompt completely
 [package]
 disabled = true
 
 [azure]
-disabled = false
+disabled = true
 format = "on [$symbol($subscription)]($style) "
 symbol = " "
 style = "blue bold"
@@ -26,6 +63,20 @@ symbol = ""
 disabled = false
 
 [kubernetes]
-disabled = false
+disabled = true
 detect_extensions = ['yaml', 'yml']
 format = '[󱃾 $context on $namespace](purple) '
+
+[os]
+disabled = false
+style = 'bold red1'
+[os.symbols]
+Debian = " "
+
+[shell]
+bash_indicator = ''
+fish_indicator = '󰈺 '
+
+[username]
+show_always = true
+style_user = 'green bold'
