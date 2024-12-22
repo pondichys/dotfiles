@@ -2,7 +2,7 @@
 
 ### EXPORT ###
 set fish_greeting # disable fish greeting message
-set -gx EDITOR helix
+set -gx EDITOR vi
 
 ### Manage $PATH
 # Add ~/.local/bin to the end of $PATH if the directory exists
@@ -20,6 +20,11 @@ if status is-interactive
     # https://github.com/flatpak/flatpak/issues/5496
     function fix-flatpak -d "Fix flatpak startup issue"
         systemctl --user restart keybase-redirector.service kbfs.service
+    end
+
+    ### Activate mise
+    if type -q mise
+    	mise activate fish | source
     end
 
     ### ALIASES ###
