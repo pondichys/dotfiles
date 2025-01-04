@@ -68,7 +68,7 @@ detect_extensions = ['yaml', 'yml']
 format = '[󱃾 $context on $namespace](purple) '
 
 [os]
-disabled = false
+disabled = true
 style = 'bold red1'
 [os.symbols]
 Debian = " "
