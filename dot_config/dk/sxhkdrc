@@ -6,13 +6,13 @@
 # SUPER + FUNCTION KEYS
 #################################################################
 
-# Vivaldi
+# Brave
 super + F1
-	vivaldi-stable
+	brave-browser-stable
 
-# Atom
+# Visual Studio Code
 super + F2
-	atom
+	code
 
 #Inkscape
 super + F3
@@ -58,13 +58,13 @@ super + F12
 # SUPER + ... KEYS
 #################################################################
 
-#Atom
+#Visual Studio Code
 super + e
     code
 
 #Browser
 super + w
-    firefox
+    brave-browser-stable
 
 #Conky-toggle
 super + c
@@ -82,7 +82,7 @@ super + c
 super + r
     rofi-theme-selector
 
-#Urxvt
+#Alacritty
 super + t
     alacritty
 
@@ -131,14 +131,6 @@ super + shift + s
 # CONTROL + ALT KEYS
 #################################################################
 
-#arcolinux-welcome-app
-ctrl + alt + w
-     arcolinux-welcome-app
-
-#archlinux-tweak-tool
-ctrl + alt + e
-    archlinux-tweak-tool
-
 #conky-rotate
 ctrl + alt + Next
      conky-rotate -n
@@ -150,14 +142,6 @@ ctrl + alt + Prior
 #File-Manager
 ctrl + alt + b
      thunar
-
-#Catfish
-ctrl + alt + c
-     catfish
-
-#Chromium
-ctrl + alt + g
-    chromium -no-default-browser-check
 
 #Firefox
 ctrl + alt + f
@@ -255,11 +239,6 @@ alt + F2
 #Xfce4-appfinder
 alt + F3
     xfce4-appfinder
-
-#Xlunch app launcher
-#alt + F5
-#    xlunch --config ~/.config/xlunch/default.conf --input ~/.config/xlunch/entries.dsv   
-
 
 #################################################################
 #VARIETY KEYS WITH PYWAL
@@ -483,17 +462,26 @@ alt + {Up,Down}
 
 #French azerty
 #keys={ampersand,eacute,quotedbl,apostrophe,parenleft,minus egrave,underscore,ccedilla,agrave}
+super + {ampersand,eacute,quotedbl,apostrophe,parenleft,minus egrave,underscore,ccedilla,agrave}
+     dkcmd ws view {1,2,3,4,5,6,7,8,9,10}
+
+ super + shift + {1,2,3,4,5,6,7,8,9,0}
+     dkcmd ws send {1,2,3,4,5,6,7,8,9,10}
+
+ super + ctrl + shift + {1,2,3,4,5,6,7,8,9,0}
+     dkcmd ws follow {1,2,3,4,5,6,7,8,9,10}
 
 #Belgian azerty
+#keys={ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}
 # view, send, or follow to a workspace (by number)
-super + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}
-    dkcmd ws view {1,2,3,4,5,6,7,8,9,10}
+# super + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}
+#     dkcmd ws view {1,2,3,4,5,6,7,8,9,10}
 
-super + shift + {1,2,3,4,5,6,7,8,9,0}
-    dkcmd ws send {1,2,3,4,5,6,7,8,9,10}
+# super + shift + {1,2,3,4,5,6,7,8,9,0}
+#     dkcmd ws send {1,2,3,4,5,6,7,8,9,10}
 
-super + ctrl + shift + {1,2,3,4,5,6,7,8,9,0}
-    dkcmd ws follow {1,2,3,4,5,6,7,8,9,10}
+# super + ctrl + shift + {1,2,3,4,5,6,7,8,9,0}
+#     dkcmd ws follow {1,2,3,4,5,6,7,8,9,10}
 
 
 #Qwerty
