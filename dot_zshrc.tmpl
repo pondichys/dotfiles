@@ -1,0 +1,204 @@
+#!/usr/bin/env zsh
+
+setopt AUTO_PUSHD				# Push the old directory onto the stack on cd.
+setopt PUSHD_IGNORE_DUPS			# Do not store duplicates in the stack.
+setopt PUSHD_SILENT				# Do not print the directory stack after pushd or popd.
+
+setopt CORRECT					# Spelling correction.
+setopt EXTENDED_GLOB				# Use extended globbing syntax.
+
+setopt AUTO_LIST				# Automatically list choices on ambiguous completion.
+setopt AUTO_MENU				# Automatically use menu completion.
+setopt ALWAYS_TO_END				# Move cursor to end if word had one match.
+
+setopt SHARE_HISTORY				# Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST			# Expire a duplicate event first when cleaning history.
+setopt HIST_IGNORE_DUPS				# Do not record duplicate events.
+setopt HIST_IGNORE_ALL_DUPS			# Delete an old recorded event if a new one is a duplicate.
+setopt HIST_FIND_NO_DUPS			# Do not display a previously found event.
+setopt HIST_IGNORE_SPACE			# Do not record events starting with a space.
+setopt HIST_SAVE_NO_DUPS			# Do not save duplicate events in history file.
+setopt HIST_VERIFY				# Do not execute immediately upon history expansion.
+
+setopt NO_BEEP					# Because beeps are annoying.
+
+# Completions
+zmodload zsh/complist				# Loads complist module that provides menu list for completions.
+autoload -Uz compinit; compinit			# Load compinit file as function and run it.
+_comp_options+=(globdots)			# Include hidden files.
+
+zstyle ':completion:*:*:*:*:*' menu select	# Select completions with arrow keys.
+
+#Load plugins
+if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] 
+then
+	source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]
+then
+	source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+export HISTCONTROL=ignoreboth:erasedups
+
+# Make nano the default editor
+
+export EDITOR='micro'
+export VISUAL='micro'
+
+# Add some pathes
+if [ -d "$HOME/.bin" ] ;
+  then PATH="$HOME/.bin:$PATH"
+fi
+
+if [ -d "$HOME/.local/bin" ] ;
+  then PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [[ -d /usr/local/go/bin ]]; then
+	export PATH=$PATH:/usr/local/go/bin
+fi
+
+### ALIASES ###
+
+#list
+alias ls='ls --color=auto'
+alias la='ls -a'
+alias ll='ls -alFh'
+alias l='ls'
+alias l.="ls -A | egrep '^\.'"
+alias listdir="ls -d */ > list"
+
+## Colorize the grep command output for ease of use (good for log files)##
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+#readable output
+alias df='df -h'
+
+#keyboard
+alias give-me-azerty-be="sudo localectl set-x11-keymap be"
+alias give-me-qwerty-us="sudo localectl set-x11-keymap us"
+
+#setlocale
+alias setlocale="sudo localectl set-locale LANG=en_US.UTF-8"
+alias setlocales="sudo localectl set-x11-keymap be && sudo localectl set-locale LANG=en_US.UTF-8"
+
+#free
+alias free="free -mt"
+
+#continue download
+alias wget="wget -c"
+
+#userlist
+alias userlist="cut -d: -f1 /etc/passwd | sort"
+
+#merge new settings
+alias merge="xrdb -merge ~/.Xresources"
+
+#ps
+alias psa="ps auxf"
+alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
+
+#grub update
+alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias grub-update="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+#grub issue 08/2022
+#alias install-grub-efi="sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArcoLinux"
+
+#add new fonts
+alias update-fc='sudo fc-cache -fv'
+
+#hardware info --short
+alias hw="hwinfo --short"
+
+#audio check pulseaudio or pipewire
+alias audio="pactl info | grep 'Server Name'"
+
+#check vulnerabilities microcode
+alias microcode='grep . /sys/devices/system/cpu/vulnerabilities/*'
+
+#approximation of how old your hardware is
+alias howold="sudo lshw | grep -B 3 -A 8 BIOS"
+
+#check cpu
+alias cpu="cpuid -i | grep uarch | head -n 1"
+
+#search content with ripgrep
+alias rg="rg --sort path"
+
+#get the error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
+
+#systeminfo
+alias probe="sudo -E hw-probe -all -upload"
+alias sysfailed="systemctl list-units --failed"
+
+# # ex = EXtractor for all kinds of archives
+# # usage: ex <file>
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   tar xf $1    ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+#lazygit
+alias lg="lazygit"
+
+{{- if (or (eq .chezmoi.osRelease.id "arch") (eq .chezmoi.osRelease.id "arcolinux") ) -}}
+{{- template "zshrc_archlinux" -}}
+{{- end -}}
+# Scaleway CLI autocomplete initialization.
+if command -v scw &> /dev/null
+then
+	eval "$(scw autocomplete script shell=zsh)"
+fi
+
+# zoxide initialization
+if command -v zoxide &> /dev/null
+then
+	eval "$(zoxide init zsh)"
+fi
+
+# Initialize starship prompt if the starship command is found.
+if command -v starship &> /dev/null
+then
+	eval "$(starship init zsh)"
+fi
+
+# fnm
+if [ -d "$HOME/.local/share/fnm" ]
+then
+	export PATH="/home/seb/.local/share/fnm:$PATH"
+	eval "`fnm env`"
+fi
+
+# Run fastfetch if installed
+if command -v fastfetch &> /dev/null
+then
+	fastfetch
+fi
