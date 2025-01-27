@@ -171,7 +171,7 @@ alias lg="lazygit"
 
 {{- if (or (eq .chezmoi.osRelease.id "arch") (eq .chezmoi.osRelease.id "arcolinux") ) -}}
 {{- template "zshrc_archlinux" -}}
-{{- end -}}
+{{ end }}
 # Scaleway CLI autocomplete initialization.
 if command -v scw &> /dev/null
 then
