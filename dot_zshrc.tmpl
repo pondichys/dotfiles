@@ -169,8 +169,12 @@ ex ()
 #lazygit
 alias lg="lazygit"
 
-{{- if (or (eq .chezmoi.osRelease.id "arch") (eq .chezmoi.osRelease.id "arcolinux") ) -}}
+{{- if (eq .chezmoi.osRelease.id "arch") -}}
 {{- template "zshrc_archlinux" -}}
+{{- end }}
+
+{{- if (eq .chezmoi.osRelease.id "arcolinux") -}}
+{{- template "zshrc_arcolinux" -}}
 {{- end }}
 
 {{ if (eq .chezmoi.osRelease.id "fedora") -}}
