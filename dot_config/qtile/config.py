@@ -1,5 +1,3 @@
-# Default Qtile config file from version 0.29
-#
 # Copyright (c) 2010 Aldo Cortesi
 # Copyright (c) 2010, 2014 dequis
 # Copyright (c) 2012 Randall Ma
@@ -26,24 +24,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
-import subprocess
-
-from libqtile import bar, hook, layout, qtile #, widget
-from libqtile.config import Click, Drag, Group, hook, Key, Match, Screen
+from libqtile import bar, layout, qtile, widget
+from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-# from libqtile.utils import guess_terminal
-from qtile_extras import widget
-from qtile_extras.widget.decorations import RectDecoration
+from libqtile.utils import guess_terminal
 
 mod = "mod4"
-terminal = "kitty"
-browser = "vivaldi-stable"
-
-# Autostart
-@hook.subscribe.startup_once
-def autostart():
-    subprocess.call([os.path.expanduser('.config/qtile/autostart.sh')])
+terminal = guess_terminal()
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -80,7 +67,7 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
     Key(
         [mod],
         "f",
@@ -91,8 +78,6 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "b", lazy.spawn(browser), desc="Launch Vivaldi browser"),
-    Key([mod], "e", lazy.spawn("Thunar"), desc="Launch Thunar file manager"),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -109,73 +94,31 @@ for vt in range(1, 8):
     )
 
 
-# groups = [Group(i) for i in "123456789"]
+groups = [Group(i) for i in "123456789"]
 
-# for i in groups:
-#    keys.extend(
-#        [
-#            # mod + group number = switch to group
-#            Key(
-#                [mod],
-#                i.name,
-#                lazy.group[i.name].toscreen(),
-#                desc=f"Switch to group {i.name}",
-#            ),
-#            # mod + shift + group number = switch to & move focused window to group
-#            Key(
-#                [mod, "shift"],
-#                i.name,
-#                lazy.window.togroup(i.name, switch_group=True),
-#                desc=f"Switch to & move focused window to group {i.name}",
-#            ),
+for i in groups:
+    keys.extend(
+        [
+            # mod + group number = switch to group
+            Key(
+                [mod],
+                i.name,
+                lazy.group[i.name].toscreen(),
+                desc=f"Switch to group {i.name}",
+            ),
+            # mod + shift + group number = switch to & move focused window to group
+            Key(
+                [mod, "shift"],
+                i.name,
+                lazy.window.togroup(i.name, switch_group=True),
+                desc=f"Switch to & move focused window to group {i.name}",
+            ),
             # Or, use below if you prefer not to switch to that group.
             # # mod + shift + group number = move focused window to group
             # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
             #     desc="move focused window to group {}".format(i.name)),
-#        ]
-#    )
-
-
-# Groups (aka workspaces) creation
-groups = []
-# Group names for AZERTY FR keyboard
-group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "minus", "egrave", "underscore", "ccedilla", "agrave",]
-# Group names for AZERTY BE keyboard
-# group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "section", "egrave", "exclam", "ccedilla", "agrave",]
-
-# Group labels
-group_labels = ["1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "0",]
-
-# Group layouts
-group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall",]
-
-# Create of list of groups
-for i in range(len(group_names)):
-    groups.append(
-        Group(
-            name=group_names[i],
-            layout=group_layouts[i].lower(),
-            label=group_labels[i],
-        ))
-
-# Assign keys to use groups
-for i in groups:
-    keys.extend([
-
-#CHANGE WORKSPACES
-        Key([mod], i.name, lazy.group[i.name].toscreen()),
-#        Key([mod], "Tab", lazy.screen.next_group()),
-#        Key([mod, "shift" ], "Tab", lazy.screen.prev_group()),
-#        Key(["mod1"], "Tab", lazy.screen.next_group()),
-#        Key(["mod1", "shift"], "Tab", lazy.screen.prev_group()),
-
-# MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND STAY ON WORKSPACE
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
-# MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND FOLLOW MOVED WINDOW TO WORKSPACE
-#        Key([mod, "shift"], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
-    ])
-
-
+        ]
+    )
 
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
@@ -184,11 +127,11 @@ layouts = [
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    layout.MonadTall(font="FiraCode Nerd Font",margin=5), 
-    layout.MonadWide(),
+    # layout.MonadTall(),
+    # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
-    layout.TreeTab(),
+    # layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
 ]
@@ -198,12 +141,6 @@ widget_defaults = dict(
     fontsize=12,
     padding=3,
 )
-
-decor = {
-        "decorations": [RectDecoration(colour="#7287fd",radius=10, filled=True, padding_y=5)],
-        "padding": 18,
-        }
-
 extension_defaults = widget_defaults.copy()
 
 screens = [
@@ -214,21 +151,18 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
-                widget.Spacer(),
-                widget.Clock(format="%a %d %b %Y %H:%M"),
-                widget.Spacer(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                # widget.TextBox("default config", name="default"),
-                # widget.CheckUpdates(**decor,distro="Arch"),
-                widget.Battery(charge_char="󱟠",discharge_char="󱟞",font="Font Awesome 6 Free Solid",format="{char} {percent:2.0%}",full_char="󱟢"),
+                widget.TextBox("default config", name="default"),
+                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
+                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
                 widget.QuickExit(),
             ],
             24,
@@ -290,4 +224,4 @@ wl_xcursor_size = 24
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "Qtile"
+wmname = "LG3D"
