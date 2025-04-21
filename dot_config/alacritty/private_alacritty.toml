@@ -3,6 +3,7 @@
 style = { shape = "Beam", blinking = "Off" }
 
 [window]
+decorations = "None"
 opacity = 0.9
 padding = { x = 5, y = 5 }
 
