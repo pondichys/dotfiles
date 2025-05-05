@@ -18,6 +18,7 @@ import = [
   # "~/.config/alacritty/catppuccin-frappe.toml"
   # "~/.config/alacritty/catppuccin-macchiato.toml"
   # "~/.config/alacritty/catppuccin-mocha.toml"
-  "~/.config/alacritty/decayce.toml"
+  # "~/.config/alacritty/decayce.toml"
+  "~/.config/alacritty/rose-pine.toml"
 ]
 
