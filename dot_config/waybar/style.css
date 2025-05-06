@@ -75,7 +75,7 @@ window#waybar.hidden {
 #disk,
 #temperature,
 #network,
-#pulseaudio,
+#wireplumber,
 #tray,
 #mode,
 #idle_inhibitor
@@ -138,11 +138,11 @@ window#waybar.hidden {
     color: @muted;
 }
 
-#pulseaudio {
+#wireplumber {
     color: @gold;
 }
 
-#pulseaudio.muted {
+#wireplumber.muted {
     color: @muted;
 }
 

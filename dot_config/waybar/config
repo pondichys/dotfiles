@@ -7,30 +7,23 @@
     "margin-left": 8,
     "margin-right": 8,
     
-    "modules-left": ["wlr/workspaces"],
+    "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "battery", "tray"],
+    "modules-right": ["wireplumber", "network", "cpu", "memory", "temperature", "battery", "tray"],
 
-    "wlr/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "format": "{icon}",
-        "format-icons": {
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "urgent": "",
-            "active": "",
-            "default": ""
-        },
-        "sort-by-number": true
+    "niri/workspaces": {
+        "all-outputs": false,
+        "format": "{value}",
     },
     
+    "niri/window": {
+        "icon": true,
+        "icon-size": 24,
+    },
+
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%I:%M %p}",
+        "format": "{:%H:%M}",
         "format-alt": "{:%Y-%m-%d}"
     },
 
@@ -56,10 +49,17 @@
             "critical": 15
         },
         "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-alt": "{icon} {time}",
-        "format-icons": ["", "", "", "", ""]
+        "format-charging": "󰂈  {capacity}%",
+        "format-plugged": "  {capacity}%",
+        "format-alt": "{icon}  {time}",
+        "format-full": "",
+        "format-icons": [
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ]
     },
     
     "network": {
@@ -71,21 +71,20 @@
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     
-    "pulseaudio": {
+    "wireplumber": {
         "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%",
-        "format-bluetooth-muted": " {icon}",
-        "format-muted": "",
+        "format-muted": "󰖁 {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
+            "headphone": "",
+            "default": [
+                "",
+                " ",
+                " "
+            ]
         },
-        "on-click": "pavucontrol"
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     },
     
     "tray": {
