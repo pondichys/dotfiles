@@ -1,3 +1,4 @@
+// vim: set filetype=jsonc
 {
     "layer": "top",
     "position": "top",
@@ -9,7 +10,7 @@
     
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": ["clock"],
-    "modules-right": ["wireplumber", "network", "cpu", "memory", "temperature", "battery", "tray"],
+    "modules-right": ["wireplumber", "cpu", "memory", "battery", "tray"],
 
     "niri/workspaces": {
         "all-outputs": false,
@@ -28,18 +29,12 @@
     },
 
     "cpu": {
-        "format": " {usage}%",
+        "format": "󰻠  {usage}%",
         "tooltip": true
     },
     
     "memory": {
-        "format": " {}%"
-    },
-    
-    "temperature": {
-        "critical-threshold": 80,
-        "format": "{icon} {temperatureC}°C",
-        "format-icons": ["", "", ""]
+        "format": "  {}%"
     },
     
     "battery": {
@@ -79,9 +74,9 @@
         "format-icons": {
             "headphone": "",
             "default": [
-                "",
-                " ",
-                " "
+                " ",
+                "  ",
+                "  "
             ]
         },
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
