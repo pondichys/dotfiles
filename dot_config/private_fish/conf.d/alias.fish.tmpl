@@ -1,0 +1,81 @@
+#!/usr/bin/env fish
+
+### ALIASES ###
+
+if status is-interactive
+
+    # Changing ls to eza
+    if type -q eza
+        alias ll='eza  --long --all --icons --git --group-directories-first'
+    end
+
+    # Better defaults
+    alias df='df -h'
+    alias free='free -m'
+    if type -q rg
+        alias grep='rg'
+    end
+
+    {{ if ne .chezmoi.osRelease.id "debian" }}
+    if type -q bat
+        alias cat='bat'
+    end
+    {{ end }}
+
+    {{ if eq .chezmoi.osRelease.id "debian" }}
+    if type -q bat-cat
+        alias cat='bat-cat'
+    end
+    {{ end }}
+
+    # fix-flatpak function
+    alias fix-flatpaks='fix-flatpak'
+    alias fix_flatpak='fix-flatpak'
+    alias fix_flatpaks='fix-flatpak'
+
+    # git
+    alias gst='git status'
+    if type -q lazygit
+        alias lg='lazygit'
+    end
+
+    # Grub update
+    alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+    alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+
+    # helix
+    if type -q helix
+        alias hx='helix'
+    end
+
+    # nvim
+    if type -q nvim
+        alias v='nvim'
+        alias vi='nvim'
+        if test -d $HOME/.config/minivim
+            alias mvim='NVIM_APPNAME=minivim nvim'
+        end
+    end
+
+    {{ if eq .chezmoi.osRelease.id "arch" }}
+    # pacman
+    alias update="sudo pacman -Syu"
+    alias fullupdate="sudo pacman -Syu && yay -Syu"
+    alias install="sudo pacman -S"
+    alias remove="sudo pacman -Rns"
+    alias pkglist="pacman -Q"
+    alias pkgaurlist="pacman -Qm"
+    alias pkginfo="pacman -Qi"
+    alias pkgsearch="pacman -Ss"
+    alias pkgfile="pacman -Qo"
+    alias pkgfilesearch="pacman -F"
+    alias pkgfilelist="pacman -Ql"
+    alias pkgfilelistsearch="pacman -Fl"
+    alias cleancache="sudo pacman -Sc"
+    alias cleanaurcache="yay -Sc"
+    alias cleanorphans="pacman -Qtdq | sudo pacman -Rns -"
+
+    alias update-mirrors='sudo reflector --verbose --score 100 --latest 20 --fastest 5 --sort rate --save /etc/pacman.d/mirrorlist'
+    alias fix-key='sudo rm /var/lib/pacman/sync/* && sudo rm -rf /etc/pacman.d/gnupg/* && sudo pacman-key --init && sudo pacman-key --populate && sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman --noconfirm -Su'
+    {{ end }}
+end
