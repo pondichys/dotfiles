@@ -16,7 +16,7 @@ if status is-interactive
 
     ### Activate mise
     if type -q mise
-        mise activate fishi --shims | source
+        mise activate fish --shims | source
     end
 
     ### zoxide
