@@ -29,6 +29,18 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+# for condiional display of battery widget
+from pathlib import Path
+
+
+# Some utility functions
+def has_battery():
+    battery_paths = [Path("/sys/class/power_supply/BAT0"), Path("/sys/class/power_supply/BAT1")]
+    for path in battery_paths:
+        if path.exists():  # Use the .exists() method of Path objects
+            return True
+    return False
+
 mod = "mod4"
 terminal = guess_terminal()
 
@@ -149,10 +161,8 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        bottom=bar.Bar(
-            [
+# Define widgets list for the bar
+widgets_list = [
                 widget.CurrentLayout(),
                 widget.GroupBox(),
                 widget.Prompt(),
@@ -163,15 +173,31 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                widget.StatusNotifier(), # requires python3-dbus-next package
+                # widget.Systray(),
+                widget.Clock(format="%A %d %B %Y %H:%M"),
                 widget.QuickExit(),
-            ],
-            24,
+            ]
+
+# Add battery widget only if a battery is detected
+if has_battery():
+    widgets_list.append(
+        widget.Battery(
+            format='{char} {percent:2.0%} {hour:d}:{min:02d}',
+            charge_char='▲',
+            discharge_char='▼',
+            full_char='=',
+            unknown_char='?',
+            low_percentage=0.2, # Customize low battery threshold
+            low_foreground="ff0000", # Red text for low battery
+        )
+    )
+
+screens = [
+    Screen(
+        bottom=bar.Bar(
+            widgets_list,
+            32,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -230,4 +256,4 @@ wl_xcursor_size = 24
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+wmname = "Qtile"
