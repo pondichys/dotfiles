@@ -183,11 +183,13 @@ widgets_list = [
 if has_battery():
     widgets_list.append(
         widget.Battery(
-            format='{char} {percent:2.0%} {hour:d}:{min:02d}',
-            charge_char='▲',
-            discharge_char='▼',
-            full_char='=',
-            unknown_char='?',
+            format='{char} {percent:2.0%}',
+            charge_char="󰂄",
+            discharge_char="󰁹",
+            empty_char="󰂃",
+            full_char="󰁹",
+            show_short_text=False,
+            not_charging_char="󰁹",
             low_percentage=0.2, # Customize low battery threshold
             low_foreground="ff0000", # Red text for low battery
         )
