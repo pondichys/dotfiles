@@ -102,16 +102,20 @@ for i in groups:
     keys.extend(
         [
             # mod + group number = switch to group
+            # I'm using key code here instead of key symbol because I'm using different AZERTY layouts
+            # and this does not require me to change key symbols whenever my layout changes
+            # You can check key codes using xev for X11
             Key(
                 [mod],
-                i.name,
+                # Key codes for 1 to 9 go from 10 to 18
+                int(i.name)+9,
                 lazy.group[i.name].toscreen(),
                 desc=f"Switch to group {i.name}",
             ),
             # mod + shift + group number = switch to & move focused window to group
             Key(
                 [mod, "shift"],
-                i.name,
+                int(i.name)+9,
                 lazy.window.togroup(i.name, switch_group=True),
                 desc=f"Switch to & move focused window to group {i.name}",
             ),
