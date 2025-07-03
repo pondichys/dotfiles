@@ -28,7 +28,6 @@ if status is-interactive
     ### fastfetch
     if type -q fastfetch
         alias ff='fastfetch'
-        fastfetch
     end
 
     ### fzf
