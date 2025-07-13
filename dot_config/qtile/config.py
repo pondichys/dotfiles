@@ -42,7 +42,7 @@ def has_battery():
     return False
 
 mod = "mod4"
-terminal = guess_terminal()
+terminal = "kitty"
 
 keys = [
     # Bindgins for apps
