@@ -24,16 +24,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from libqtile import bar, layout, qtile, widget
+from libqtile import bar, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
-# for condiional display of battery widget
 from pathlib import Path
+import subprocess
 
 
-# Some utility functions
+# Function to check if the computer has a battery installed
 def has_battery():
     battery_paths = [Path("/sys/class/power_supply/BAT0"), Path("/sys/class/power_supply/BAT1")]
     for path in battery_paths:
@@ -41,9 +41,21 @@ def has_battery():
             return True
     return False
 
+
+# Some variables
 mod = "mod4"
 terminal = "kitty"
 
+# Autostart
+@hook.subscribe.startup_once
+def autostart():
+    home = Path.home()
+    autostart_script = home / ".config" / "qtile" / "autostart.sh"
+    if autostart_script.is_file():
+        subprocess.Popen([autostart_script])
+
+
+# Key mappings
 keys = [
     # Bindgins for apps
     Key([mod], "d", lazy.spawn("rofi -show drun"), desc="Start application launcher"),
