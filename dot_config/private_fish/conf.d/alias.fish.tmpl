@@ -16,17 +16,19 @@ if status is-interactive
         alias grep='rg'
     end
 
-    {{ if ne .chezmoi.osRelease.id "debian" }}
+    {{ if ne .chezmoi.osRelease.id "debian" -}}
+
     if type -q bat
         alias cat='bat'
     end
-    {{ end }}
+    {{- end }}
 
-    {{ if eq .chezmoi.osRelease.id "debian" }}
+    {{- if eq .chezmoi.osRelease.id "debian" -}}
+    
     if type -q bat-cat
         alias cat='bat-cat'
     end
-    {{ end }}
+    {{- end }}
 
     # fix-flatpak function
     alias fix-flatpaks='fix-flatpak'
@@ -38,10 +40,12 @@ if status is-interactive
     if type -q lazygit
         alias lg='lazygit'
     end
-
+    
+    {{- if eq .chezmoi.osRelease.id "void" -}}
     # Grub update
     alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
     alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+    {{- end }}
 
     # helix
     if type -q helix
@@ -57,7 +61,7 @@ if status is-interactive
         end
     end
 
-    {{ if eq .chezmoi.osRelease.id "arch" }}
+    {{- if eq .chezmoi.osRelease.id "arch" -}}
     # pacman
     alias update="sudo pacman -Syu"
     alias fullupdate="sudo pacman -Syu && yay -Syu"
@@ -77,5 +81,13 @@ if status is-interactive
 
     alias update-mirrors='sudo reflector --verbose --score 100 --latest 20 --fastest 5 --sort rate --save /etc/pacman.d/mirrorlist'
     alias fix-key='sudo rm /var/lib/pacman/sync/* && sudo rm -rf /etc/pacman.d/gnupg/* && sudo pacman-key --init && sudo pacman-key --populate && sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman --noconfirm -Su'
-    {{ end }}
+    {{- end -}}
+
+    {{ if contains "opensuse-tumbleweed" .chezmoi.osRelease.idLike }}
+
+    # zypper
+    alias update="sudo zypper refresh && sudo zypper dup"
+    alias upall="sudo zypper refresh && sudo zypper dup && sudo flatpak update"
+    {{- end }}
+
 end
