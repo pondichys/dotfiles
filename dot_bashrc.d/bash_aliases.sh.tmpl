@@ -137,7 +137,8 @@ alias fix-key="fixkeys"
 alias fix-keys="fixkeys"
 {{ end }}
 
-{{ if eq .chezmoi.osRelease.id "fedora" }}
+{{- if eq .chezmoi.osRelease.id "fedora" }}
+
 # Package manager
 alias update="dnf check-update"
 alias upgrade="sudo dnf upgrade --refresh"
@@ -148,4 +149,11 @@ alias search="dnf search"
 alias pkglist="dnf list installed"
 alias cleancache="sudo dnf clean all"
 alias cleanorphans="sudo dnf autoremove"
-{{ end }}
+{{- end -}}
+
+{{- if contains "opensuse-tumbleweed" .chezmoi.osRelease.idLike -}}
+
+# zypper
+alias update="sudo zypper refresh && sudo zypper dup"
+alias upall="sudo zypper refresh && sudo zypper dup && sudo flatpak update"
+{{- end }}
