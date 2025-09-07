@@ -173,10 +173,6 @@ alias lg="lazygit"
 {{- template "zshrc_archlinux" -}}
 {{- end }}
 
-{{- if (eq .chezmoi.osRelease.id "arcolinux") -}}
-{{- template "zshrc_arcolinux" -}}
-{{- end }}
-
 {{ if (eq .chezmoi.osRelease.id "fedora") -}}
 # Package manager
 alias update="dnf check-update"
