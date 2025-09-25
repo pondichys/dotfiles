@@ -58,6 +58,7 @@ fi
 if command -v eza &> /dev/null
 then
     alias ls='eza --group-directories-first'
+    alias ll='eza --group-directories-first --git --long'
     alias ll='eza --all --group-directories-first --git --long'
     alias tree='eza --all --directory-only --tree'
 fi
