@@ -27,7 +27,6 @@ export PATH
 # export SYSTEMD_PAGER=
 
 # Other EXPORTS
-export EDITOR=micro
 export QT_STYLE_OVERRIDE=kvantum
 
 # User specific aliases and functions
