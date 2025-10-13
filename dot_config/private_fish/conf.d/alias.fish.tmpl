@@ -4,6 +4,10 @@
 
 if status is-interactive
 
+    alias ls='ls --color=auto --group-directories-first'
+    alias ll='ls -lH --color=auto --group-directories-first'
+    alias la='ls -lhA --color=auto --group-directories-first'
+
     # Changing ls to eza
     if type -q eza
         alias ll='eza  --long --icons --git --group-directories-first'
