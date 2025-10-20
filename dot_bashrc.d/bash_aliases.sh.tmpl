@@ -1,14 +1,6 @@
 #!/usr/bin/env bash
 # This is a chezmoi template file that adapts the content to the os of the target machine
 
-# Setup of mise-en-place to enable to find tools in rc file
-# See https://mise.jdx.dev/dev-tools/shims.html#zshrc-bashrc-files for more info
-if command -v mise &> /dev/null
-then
-	eval "$(mise activate bash)"
-	eval "$(mise hook-env -s bash)"
-fi
-
 # Misc
 {{ if eq .chezmoi.osRelease.id "debian" }}
 if command -v bat-cat &> /dev/null
