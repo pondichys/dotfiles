@@ -5,6 +5,11 @@ if test -d /home/linuxbrew
     eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
 
+### Activate mise with shims
+if type -q mise
+    mise activate fish --shims | source
+end
+
 if status is-interactive
 
     ### FUNCTIONS ###
@@ -16,7 +21,7 @@ if status is-interactive
 
     ### Activate mise
     if type -q mise
-        mise activate fish --shims | source
+        mise activate fish | source
     end
 
     ### zoxide
