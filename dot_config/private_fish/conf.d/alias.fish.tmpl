@@ -29,7 +29,7 @@ if status is-interactive
     {{- end }}
 
     {{- if eq .chezmoi.osRelease.id "debian" -}}
-    
+
     if type -q bat-cat
         alias cat='bat-cat'
     end
@@ -45,7 +45,7 @@ if status is-interactive
     if type -q lazygit
         alias lg='lazygit'
     end
-    
+
     {{- if eq .chezmoi.osRelease.id "void" -}}
     # Grub update
     alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
@@ -88,11 +88,13 @@ if status is-interactive
     alias fix-key='sudo rm /var/lib/pacman/sync/* && sudo rm -rf /etc/pacman.d/gnupg/* && sudo pacman-key --init && sudo pacman-key --populate && sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman --noconfirm -Su'
     {{- end -}}
 
+    {{ if hasKey .chezmoi.osRelease "idLike" }}
     {{ if contains "opensuse-tumbleweed" .chezmoi.osRelease.idLike }}
 
     # zypper
     alias update="sudo zypper refresh && sudo zypper dup"
     alias upall="sudo zypper refresh && sudo zypper dup && sudo flatpak update"
     {{- end }}
+    {{ end }}
 
 end

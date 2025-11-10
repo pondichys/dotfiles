@@ -148,9 +148,10 @@ alias cleancache="sudo dnf clean all"
 alias cleanorphans="sudo dnf autoremove"
 {{- end -}}
 
-{{- if contains "opensuse-tumbleweed" .chezmoi.osRelease.idLike -}}
-
+{{ if hasKey .chezmoi.osRelease "idLike" }}
+ {{- if contains (.chezmoi.osRelease.idLike | lower) "tumbleweed" -}}
 # zypper
 alias update="sudo zypper refresh && sudo zypper dup"
 alias upall="sudo zypper refresh && sudo zypper dup && sudo flatpak update"
 {{- end }}
+{{ end }}
