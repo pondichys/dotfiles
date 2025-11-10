@@ -22,6 +22,9 @@ if status is-interactive
     ### Activate mise
     if type -q mise
         mise activate fish | source
+	# This line is required to get access to tools installed with mise inside the fish config files
+	# See https://mise.jdx.dev/dev-tools/shims.html#using-mise-in-rc-files
+        mise hook-env -s fish | source
     end
 
     ### zoxide
@@ -38,6 +41,11 @@ if status is-interactive
     ### fzf
     if type -q fzf
         fzf --fish | source
+    end
+
+    ### lazygit
+    if type -q lazygit
+        alias lg='lazygit'
     end
 
     ### starship
