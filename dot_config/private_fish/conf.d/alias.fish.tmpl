@@ -35,6 +35,11 @@ if status is-interactive
     end
     {{- end }}
 
+    {{ if eq .chezmoi.osRelease.id "debian" }}
+    alias update='sudo apt update && sudo apt upgrade'
+    alias upall='sudo apt update && sudo apt upgrade && flatpak update'
+    {{- end }}
+
     # fix-flatpak function
     alias fix-flatpaks='fix-flatpak'
     alias fix_flatpak='fix-flatpak'
