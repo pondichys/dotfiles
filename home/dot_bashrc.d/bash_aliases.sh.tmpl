@@ -1,135 +1,108 @@
 #!/usr/bin/env bash
 # This is a chezmoi template file that adapts the content to the os of the target machine
-
 # Misc
-{{ if eq .chezmoi.osRelease.id "debian" }}
-if command -v bat-cat &> /dev/null
-then
-    alias cat='bat-cat'
-fi
-{{ end }}
+{{ if and (eq .chezmoi.osRelease.id "debian") (lookPath "bat-cat") -}}
+alias cat="bat-cat"
+{{- end -}}
+{{- if and (ne .chezmoi.osRelease.id "debian") (lookPath "bat") -}}
+alias cat="bat"
+{{- end -}}
 
-{{ if ne .chezmoi.osRelease.id "debian" }}
-if command -v bat &> /dev/null
-then
-    alias cat='bat'
-fi
-{{ end }}
+{{- if (lookPath "nvim") -}}
+alias v="nvim"
+alias vi="nvim"
+{{- end -}}
 
-if command -v nvim &> /dev/null
-then
-    alias v='nvim'
-    alias vi='nvim'
-    if test -d $HOME/.config/minivim
-    then
-        alias mvim='NVIM_APPNAME=minivim nvim'
-    fi
-fi
-
-if command -v fastfetch &> /dev/null
-then
-    alias ff='fastfetch'
-fi
+{{ if (lookPath "fastfetch") }}
+alias ff="fastfetch"
+{{- end }}
 
 # File stuff
-alias ls='ls --color=auto --group-directories-first'
-alias ll='ls -lh --color=auto --group-directories-first'
-alias la='ls -lAh --color=auto --group-directories-first'
-
-if command -v lsd &> /dev/null
-then
-    alias ls='lsd --group-directories-first'
-    alias ll='lsd --all --group-directories-first --git --long'
-    alias tree='lsd --all --directory-only --tree'
-fi
-
-if command -v exa &> /dev/null
-then
-    alias ls='exa --group-directories-first'
-    alias ll='exa --all --group-directories-first --git --long'
-    alias tree='exa --all --directory-only --tree'
-fi
-
-
-if command -v eza &> /dev/null
-then
-    alias ls='eza --group-directories-first'
-    alias ll='eza --group-directories-first --git --long'
-    alias ll='eza --all --group-directories-first --git --long'
-    alias tree='eza --all --directory-only --tree'
-fi
-
-alias mkdir='mkdir -pv'
-alias cp='cp -iv'
+{{ if (lookPath "lsd") -}}
+alias ls="lsd --group-directories-first"
+alias ll="lsd --all --group-directories-first --git --long"
+alias tree="lsd --all --directory-only --tree"
+{{- else if (lookPath "exa") -}}
+alias ls="exa --group-directories-first"
+alias ll="exa --all --group-directories-first --git --long"
+alias tree="exa --all --directory-only --tree"
+{{- else if (lookPath "eza") -}}
+alias ls="eza --group-directories-first"
+alias ll="eza --group-directories-first --git --long"
+alias ll="eza --all --group-directories-first --git --long"
+alias tree="eza --all --directory-only --tree"
+{{- else -}}
+alias ls="ls --color=auto --group-directories-first"
+alias ll="ls -lh --color=auto --group-directories-first"
+alias la="ls -lAh --color=auto --group-directories-first"
+{{- end }}
+alias mkdir="mkdir -pv"
+alias cp="cp -iv"
 
 # Colorize grep output
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
 
 # Ease reading of sizes
-alias df='df -h'
-alias free='free -m'
+alias df="df -h"
+alias free="free -m"
 
 # Git stuff
-alias gst='git status'
-alias ga='git add'
-alias gapa='git add --patch'
-alias gco='git checkout'
-alias gcb='git checkout -b'
-alias gp='git push'
-alias glgg='git log --graph'
-alias glgga='git log --graph --decorate --all'
-alias glo='git log --pretty="oneline"'
-if command -v lazygit &> /dev/null
-then
-    alias lg='lazygit'
-fi
+alias gst="git status"
+alias ga="git add"
+alias gapa="git add --patch"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gp="git push"
+alias glgg="git log --graph"
+alias glgga="git log --graph --decorate --all"
+alias glo="git log --pretty="oneline""
+{{- if (lookPath "lazygit") }}
+alias lg="lazygit"
+{{- end }}
 
 # Top 5 processes consuming memory
-alias psmem='ps auxf | sort -nr -k 4 | head -5'
+alias psmem="ps auxf | sort -nr -k 4 | head -5"
 
 # Top 5 processes consuming CPU
-alias pscpu='ps auxf | sort -nr -k 3 | head 5'
+alias pscpu="ps auxf | sort -nr -k 3 | head 5"
 
 # Fix bug with flatpak applications that cannot start when keybase is installed and /kbfs is mounted
 # https://github.com/flatpak/flatpak/issues/5496
-alias fix-flatpak='fixflatpaks'
-alias fix-flatpaks='fixflatpaks'
-alias fix_flatpak='fixflatpaks'
-alias fix_flatpaks='fixflatpaks'
+alias fix-flatpak="fixflatpaks"
+alias fix-flatpaks="fixflatpaks"
+alias fix_flatpak="fixflatpaks"
+alias fix_flatpaks="fixflatpaks"
 
-# Update GRUB
-alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-
+{{ if ne .chezmoi.osRelease.id "void" -}}
 # Get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
+{{- end }}
 
-{{ if eq .chezmoi.osRelease.id "debian" }}
+{{ if eq .chezmoi.osRelease.id "debian" -}}
 alias update="sudo apt update && sudo apt upgrade"
 alias upall="sudo apt update && sudo apt upgrade && flatpak update"
-{{ end }}
+{{- end -}}
 
-{{ if eq .chezmoi.osRelease.id "arch" }}
-# PACMAN
+{{- if eq .chezmoi.osRelease.id "arch" -}}
+##### Archlinux #####
+# package management
+alias update="sudo pacman -Syyu"
+alias upd="sudo pacman -Syyu"
+
 # pacman unlock
 alias unlock="sudo rm /var/lib/pacman/db.lck"
 alias rmpacmanlock="sudo rm /var/lib/pacman/db.lck"
 
-# Aliases for software managment
-# pacman
-alias update="sudo pacman -Syyu"
-alias upd="sudo pacman -Syyu"
-
-# Recent Installed Packages
+# recent installed packages
 alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias riplong="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -3000 | nl"
 
-# Cleanup orphaned packages
+# cleanup orphaned packages
 alias cleanup="sudo pacman -Rns $(pacman -Qtdq)"
 
-# Various fixes
+# various fixes
 alias keyfix="fixkeys"
 alias key-fix="fixkeys"
 alias keys-fix="fixkeys"
@@ -137,11 +110,11 @@ alias fixkey="fixkeys"
 alias fixkeys="fixkeys"
 alias fix-key="fixkeys"
 alias fix-keys="fixkeys"
-{{ end }}
+{{- end -}}
 
 {{- if eq .chezmoi.osRelease.id "fedora" }}
-
-# Package manager
+##### Fedora #####
+# package management
 alias update="dnf check-update"
 alias upgrade="sudo dnf upgrade --refresh"
 alias fullupgrade="sudo dnf distro-sync --refresh && flatpak update"
@@ -153,10 +126,26 @@ alias cleancache="sudo dnf clean all"
 alias cleanorphans="sudo dnf autoremove"
 {{- end -}}
 
-{{ if hasKey .chezmoi.osRelease "idLike" }}
- {{- if contains (.chezmoi.osRelease.idLike | lower) "tumbleweed" -}}
-# zypper
+{{ if hasKey .chezmoi.osRelease "idLike" -}}
+ {{- if contains "opensuse" (.chezmoi.osRelease.idLike | lower) -}}
+##### OpenSuse #####
+# package management
 alias update="sudo zypper refresh && sudo zypper dup"
 alias upall="sudo zypper refresh && sudo zypper dup && sudo flatpak update"
 {{- end }}
 {{ end }}
+
+{{- if eq .chezmoi.osRelease.id "void" -}}
+##### Void #####
+# package management
+alias update="sudo xbps-install -Su"
+alias upall="sudo xbps-install -Su && flatpak update"
+
+# grub update
+alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias grub-update="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias install-grub-efi="sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Void"
+# backup contents of /etc/skel to hidden backup folder in home/user
+alias bupskel="cp -Rf /etc/skel ~/.skel-backup-$(date +%Y.%m.%d-%H.%M.%S)"
+{{- end }}
+
