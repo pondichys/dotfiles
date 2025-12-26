@@ -1,10 +1,11 @@
+#!/usr/bin/env bash
 # Fix bug with flatpak applications that cannot start when keybase is installed and /kbfs is mounted
 # https://github.com/flatpak/flatpak/issues/5496
 function fixflatpaks() {
 	systemctl --user restart keybase-redirector.service kbfs.service
 }
 
-{{ if eq .chezmoi.osRelease.id "arch" }}
+{{ if eq .chezmoi.osRelease.id "arch" -}}
 # Show the list of packages that need this package
 function depends()  {
     search=$(echo "$1")

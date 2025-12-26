@@ -1,0 +1,7 @@
+# old bash config files
+bash_aliases.sh
+bash_fzf.sh
+bash_starship.sh
+bash_void_aliases.sh
+bash_zoxide.sh
+mise.sh
